@@ -5,7 +5,7 @@
 {% set itemPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT') %}
 {% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
 {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
-{% set orderDiscountAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\AdjustmentType::ORDER_DISCOUNT_ADJUSTMENT') %}
+{% set orderAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\AdjustmentType::ORDER_ADJUSTMENT') %}
 
 {% set orderShippingPromotions = sylius_aggregate_adjustments(order.getAdjustmentsRecursively(orderShippingPromotionAdjustment)) %}
 
@@ -61,8 +61,8 @@
 </tr>
 <tr>
     <td colspan="9" id="discount-total" class="right aligned">
-        <strong>{{ 'sylius_admin_order_creation.ui.order_discount'|trans }}</strong>:
-        {{ money.format(order.getAdjustmentsTotalRecursively(orderDiscountAdjustment), order.currencyCode) }}
+        <strong>{{ 'sylius_admin_order_creation.ui.order_adjustment'|trans }}</strong>:
+        {{ money.format(order.getAdjustmentsTotalRecursively(orderAdjustment), order.currencyCode) }}
     </td>
 </tr>
 <tr>

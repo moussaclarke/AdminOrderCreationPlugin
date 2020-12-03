@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Sylius\Bundle\ResourceBundle\Form\Type\ResourceAutocompleteChoiceType;
-use Symfony\Component\Form\DataMapperInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\DataMapperInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Bundle\ResourceBundle\Form\Type\ResourceAutocompleteChoiceType;
 
 final class OrderItemType extends AbstractResourceType
 {
@@ -33,31 +33,31 @@ final class OrderItemType extends AbstractResourceType
     {
         $builder
             ->add('quantity', IntegerType::class, [
-                'attr' => ['min' => 1],
-                'label' => 'sylius.ui.quantity',
+                'attr'       => ['min' => 1],
+                'label'      => 'sylius.ui.quantity',
                 'empty_data' => 1,
             ])
             ->add('variant', ResourceAutocompleteChoiceType::class, [
-                'label' => 'sylius.ui.variant',
-                'choice_name' => 'descriptor',
+                'label'        => 'sylius.ui.variant',
+                'choice_name'  => 'descriptor',
                 'choice_value' => 'code',
-                'resource' => 'sylius.product_variant',
+                'resource'     => 'sylius.product_variant',
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options): void {
                 $event
                     ->getForm()
                     ->add('adjustments', CollectionType::class, [
-                        'label' => false,
-                        'entry_type' => AdjustmentType::class,
-                        'entry_options' => [
-                            'label' => 'sylius_admin_order_creation.ui.item_discount',
+                        'label'            => false,
+                        'entry_type'       => AdjustmentType::class,
+                        'entry_options'    => [
+                            'label'    => 'sylius_admin_order_creation.ui.item_adjustment',
                             'currency' => $options['currency'],
-                            'type' => AdjustmentType::ORDER_ITEM_DISCOUNT_ADJUSTMENT,
+                            'type'     => AdjustmentType::ORDER_ITEM_ADJUSTMENT,
                         ],
-                        'allow_add' => true,
-                        'allow_delete' => true,
-                        'by_reference' => false,
-                        'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
+                        'allow_add'        => true,
+                        'allow_delete'     => true,
+                        'by_reference'     => false,
+                        'button_add_label' => 'sylius_admin_order_creation.ui.add_adjustment',
                     ])
                 ;
             })

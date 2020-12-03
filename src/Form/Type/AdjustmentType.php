@@ -1,31 +1,27 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
-use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormBuilderInterface;
+use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Range;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 
 final class AdjustmentType extends AbstractResourceType
 {
-    public const ORDER_DISCOUNT_ADJUSTMENT = 'order_discount';
+    public const ORDER_ADJUSTMENT = 'order_adjustment';
 
-    public const ORDER_ITEM_DISCOUNT_ADJUSTMENT = 'order_item_discount';
+    public const ORDER_ITEM_ADJUSTMENT = 'order_item_adjustment';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('amount', MoneyType::class, [
-            'label' => $options['label'],
+            'label'    => $options['label'],
             'currency' => $options['currency'],
-            'constraints' => [
-                new Range(['min' => 0, 'minMessage' => 'sylius_admin_order_creation.order_discount', 'groups' => ['sylius']]),
-            ],
         ]);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options): void {
@@ -35,8 +31,8 @@ final class AdjustmentType extends AbstractResourceType
                 return;
             }
 
-            $adjustment->setLabel('sylius_admin_order_creation.ui.order_discount');
-            $adjustment->setAmount(-1 * $adjustment->getAmount());
+            $adjustment->setLabel('sylius_admin_order_creation.ui.order_adjustment');
+            $adjustment->setAmount($adjustment->getAmount());
             $adjustment->setType($options['type']);
 
             $event->setData($adjustment);

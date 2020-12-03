@@ -4,14 +4,14 @@
 {% set unitPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT') %}
 {% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
 {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
-{% set orderItemDiscountAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\AdjustmentType::ORDER_ITEM_DISCOUNT_ADJUSTMENT') %}
+{% set orderItemAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\AdjustmentType::ORDER_ITEM_ADJUSTMENT') %}
 
 {% set variant = item.variant %}
 {% set product = variant.product %}
 
-{% set unitDiscount = item.units.first.adjustmentsTotal(unitPromotionAdjustment) + item.getAdjustmentsTotalRecursively(orderItemDiscountAdjustment) / item.quantity %}
-{% set discountedUnitPrice = item.fullDiscountedUnitPrice + item.getAdjustmentsTotalRecursively(orderItemDiscountAdjustment) / item.quantity %}
-{% set subtotal = item.quantity * (item.unitPrice + item.units.first.adjustmentsTotal(unitPromotionAdjustment) + item.units.first.adjustmentsTotal(orderPromotionAdjustment)) + item.getAdjustmentsTotalRecursively(orderItemDiscountAdjustment) %}
+{% set unitAdjustment = item.units.first.adjustmentsTotal(unitPromotionAdjustment) + item.getAdjustmentsTotalRecursively(orderItemAdjustment) / item.quantity %}
+{% set adjustedUnitPrice = item.fullDiscountedUnitPrice + item.getAdjustmentsTotalRecursively(orderItemAdjustment) / item.quantity %}
+{% set subtotal = item.quantity * (item.unitPrice + item.units.first.adjustmentsTotal(unitPromotionAdjustment) + item.units.first.adjustmentsTotal(orderPromotionAdjustment)) + item.getAdjustmentsTotalRecursively(orderItemAdjustment) %}
 
 {% set taxIncluded = sylius_admin_order_unit_tax_included(item) %}
 {% set taxExcluded = sylius_admin_order_unit_tax_excluded(item) %}
@@ -24,13 +24,13 @@
         {{ money.format(item.unitPrice, order.currencyCode) }}
     </td>
     <td class="right aligned unit-discount">
-        {{ money.format(unitDiscount, order.currencyCode) }}
+        {{ money.format(unitAdjustment, order.currencyCode) }}
     </td>
     <td class="right aligned unit-order-discount">
         <span style="font-style: italic;">{{ money.format(item.units.first.adjustmentsTotal(orderPromotionAdjustment), order.currencyCode) }}</span>
     </td>
     <td class="right aligned discounted-unit-price">
-        {{ money.format(discountedUnitPrice, order.currencyCode) }}
+        {{ money.format(adjustedUnitPrice, order.currencyCode) }}
     </td>
     <td class="right aligned quantity">
         {{ item.quantity }}

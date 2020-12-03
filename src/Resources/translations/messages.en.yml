@@ -1,21 +1,21 @@
 sylius_admin_order_creation:
-    email:
-        order_created:
-            subject: "New order has been created for you"
-            body: "New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click {{ link }}"
-    form:
-        order:
-            order_price: 'Order price'
-    ui:
-        add_discount: 'Add discount'
-        confirm: 'Confirm'
-        create_new: 'Create new'
-        customer_email: 'Customer email cannot be empty'
-        customer_selection: 'Customer selection'
-        item_discount: 'Item discount'
-        new_customer_email: 'New customer email'
-        no_customer_selected: "You haven't selected a customer"
-        order_discount: 'Order discount'
-        order_preview: 'Order preview'
-        reorder: 'Reorder'
-        shipping_methods_selection_requirement: 'You need to add some items and shipping address to select from eligible shipping method'
+  email:
+    order_created:
+      subject: "New order has been created for you"
+      body: "New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click {{ link }}"
+  form:
+    order:
+      order_price: "Order price"
+  ui:
+    add_adjustment: "Add adjustment"
+    confirm: "Confirm"
+    create_new: "Create new"
+    customer_email: "Customer email cannot be empty"
+    customer_selection: "Customer selection"
+    item_adjustment: "Item adjustment"
+    new_customer_email: "New customer email"
+    no_customer_selected: "You haven't selected a customer"
+    order_adjustment: "Order adjustment"
+    order_preview: "Order preview"
+    reorder: "Reorder"
+    shipping_methods_selection_requirement: "You need to add some items and shipping address to select from eligible shipping method"

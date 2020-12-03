@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
-use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
-use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\OrderInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Sylius\Component\Core\Model\OrderInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
 
 final class NewOrderType extends AbstractResourceType
 {
@@ -21,30 +21,30 @@ final class NewOrderType extends AbstractResourceType
         $builder
             ->add('promotionCoupon', PromotionCouponToCodeType::class, [
                 'by_reference' => false,
-                'label' => 'sylius.form.cart.coupon',
-                'required' => false,
+                'label'        => 'sylius.form.cart.coupon',
+                'required'     => false,
             ])
             ->add('shippingAddress', AddressType::class, [
                 'label' => 'sylius.ui.shipping_address',
             ])
             ->add('billingAddress', AddressType::class, [
-                'label' => 'sylius.ui.billing_address',
+                'label'    => 'sylius.ui.billing_address',
                 'required' => false,
             ])
             ->add('payments', CollectionType::class, [
-                'entry_type' => PaymentType::class,
-                'label' => 'sylius.ui.payments',
-                'allow_add' => true,
+                'entry_type'   => PaymentType::class,
+                'label'        => 'sylius.ui.payments',
+                'allow_add'    => true,
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
             ->add('shipments', CollectionType::class, [
-                'entry_type' => ShipmentType::class,
-                'label' => 'sylius.ui.shipments',
-                'allow_add' => true,
+                'entry_type'   => ShipmentType::class,
+                'label'        => 'sylius.ui.shipments',
+                'allow_add'    => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'required' => false,
+                'required'     => false,
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 /** @var OrderInterface $order */
@@ -56,36 +56,36 @@ final class NewOrderType extends AbstractResourceType
                 $event
                     ->getForm()
                     ->add('items', CollectionType::class, [
-                        'label' => false,
-                        'entry_type' => OrderItemType::class,
+                        'label'         => false,
+                        'entry_type'    => OrderItemType::class,
                         'entry_options' => [
                             'currency' => $order->getCurrencyCode(),
                         ],
-                        'allow_add' => true,
-                        'allow_delete' => true,
-                        'by_reference' => false,
+                        'allow_add'     => true,
+                        'allow_delete'  => true,
+                        'by_reference'  => false,
                     ])
                     ->add('adjustments', CollectionType::class, [
-                        'label' => false,
-                        'entry_type' => AdjustmentType::class,
-                        'entry_options' => [
-                            'label' => 'sylius_admin_order_creation.ui.order_discount',
+                        'label'            => false,
+                        'entry_type'       => AdjustmentType::class,
+                        'entry_options'    => [
+                            'label'    => 'sylius_admin_order_creation.ui.order_adjustment',
                             'currency' => $order->getCurrencyCode(),
-                            'type' => AdjustmentType::ORDER_DISCOUNT_ADJUSTMENT,
+                            'type'     => AdjustmentType::ORDER_ADJUSTMENT,
                         ],
-                        'allow_add' => true,
-                        'allow_delete' => true,
-                        'by_reference' => false,
-                        'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
+                        'allow_add'        => true,
+                        'allow_delete'     => true,
+                        'by_reference'     => false,
+                        'button_add_label' => 'sylius_admin_order_creation.ui.add_adjustment',
                     ])
                     ->add('localeCode', LocaleCodeChoiceType::class, [
-                        'label' => false,
-                        'choices' => $channel->getLocales(),
+                        'label'      => false,
+                        'choices'    => $channel->getLocales(),
                         'empty_data' => $order->getLocaleCode(),
                     ])
                     ->add('currencyCode', CurrencyCodeChoiceType::class, [
-                        'label' => false,
-                        'choices' => $channel->getCurrencies(),
+                        'label'      => false,
+                        'choices'    => $channel->getCurrencies(),
                         'empty_data' => $order->getCurrencyCode(),
                     ])
                 ;
