@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Sylius\AdminOrderCreationPlugin\Sender;
 
@@ -36,7 +36,10 @@ final class OrderPaymentLinkSender implements OrderPaymentLinkSenderInterface
             ->send(
                 'order_created_in_admin_panel',
                 [$order->getCustomer()->getEmail()],
-                ['paymentLink' => $paymentDetails['payment-link']]
+                [
+                    'order'       => $order,
+                    'paymentLink' => $paymentDetails['payment-link'],
+                ]
             )
         ;
     }
