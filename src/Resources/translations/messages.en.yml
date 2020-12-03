@@ -13,6 +13,8 @@ sylius_admin_order_creation:
     customer_email: "Customer email cannot be empty"
     customer_selection: "Customer selection"
     item_adjustment: "Item adjustment"
+    unit_adjustment: "Unit adjustment"
+    adjusted_unit_price: "Adjusted unit price"
     new_customer_email: "New customer email"
     no_customer_selected: "You haven't selected a customer"
     order_adjustment: "Order adjustment"
